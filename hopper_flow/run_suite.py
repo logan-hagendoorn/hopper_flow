@@ -47,7 +47,7 @@ c_t = 2 * xi * (grain_mass * k_t)**0.5                  #tangential damping
 param_combinations = []
 
 dia_spacing = 0.25 #how closely spaced the datapoints should be
-num_sims = 14      #how many simulations should be run
+num_sims = 9      #how many simulations should be run
 min_dia = 4.75     #the minimum diameter that should be used
 
 for i in range(num_sims):
@@ -56,3 +56,4 @@ for i in range(num_sims):
 #run the simulation for each combination
 for i in range(len(param_combinations)):
     subprocess.run(["python", "main.py"] + [str(p) for p in param_combinations[i]])
+
