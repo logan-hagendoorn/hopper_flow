@@ -7,10 +7,15 @@ Python 3.12.10
 
 Necessary dependencies:
 taichi
+
 numpy
+
 matplotlib
+
 scipy
+
 opencv-python
+
 
 Installations:
 pip install taichi
