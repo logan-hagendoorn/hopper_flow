@@ -17,7 +17,9 @@ scipy
 opencv-python
 
 
+
 Installations:
+
 pip install taichi
 
 pip install numpy
