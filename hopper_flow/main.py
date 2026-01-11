@@ -175,7 +175,7 @@ def updateCells():
         for s in range(8):
             cellsArr[I][s] = -1 #fix
 
-    # insert particles into cells using an atomic counter per cell
+    # insert particles into cells using an atomic counter per cell (prevents race conditions)
     for i in range(int(n)):
         gx = int(positions[i][0] // dia)
         gy = int(positions[i][1] // dia)
@@ -651,4 +651,5 @@ while window.running:
     capture_frame()
     canvas.scene(scene)
     window.show()
+
 
