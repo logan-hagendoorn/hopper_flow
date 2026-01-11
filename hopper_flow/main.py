@@ -35,34 +35,36 @@ video = cv2.VideoWriter(
     (1800, 1080)
 )
 
-#pi constant
+
 pi = 3.141592653589793
+
 
 #data collection arrays and variables
 flow_rates = [] #stores the flow rate at each second of the simulation
 count = [0, 0]  #count[0] is the total number of particles that have flowed out at the previous second, count[1] is the current second
 
 #simulation parameters (all in SI units)
-dt_fixed = 1 / 36000                                #timestep
-substeps = int((1 / 60) // dt_fixed)                #number of substeps per frame, using 60 fps
-dia = 0.001                                         #grain diameter
-den = 2500.0                                        #grain density
-cellParam = 100                                     #scales the size of the spatial partitioning grid (cells are dia x dia x dia)
-n = 200000                                          #number of grains
-k = 50.0                                            #this simulation uses a spring-dashpot model for normal forces; this is the spring constant
-muK = 0.125                                         #kinetic friction coefficient between grains
-muKSurface = 0.15                                   #kinetic friction coefficient between grains and surfaces
-muSSurface = 0.4                                    #static friction coefficient between grains and surfaces
-elastic = float(False)                              #0.0 for inelastic collisions, 1.0 for elastic collisions
-grain_mass = (4/3)*pi*(dia/2)**3 * den              #mass of each grain
-k_surface = k                                       #spring constant for surfaces
-g = 9.81                                            #gravitational acceleration
-cone_angle = 45 * pi / 180                          #pi / 2 - half angle of the cone in radians
-critical_damping =  ti.sqrt(grain_mass * k_surface) #dashpot damping coefficient for normal forces
-k_t = 0.5 * k                                       #tangential spring constant for friction model
-xi = 0.5                                            #damping ratio for tangential dashpot
-c_t = 2 * xi * ti.sqrt(grain_mass * k_t)            #tangential damping
-aperture_diameter = 8 * dia                         #diameter of the cone's aperture
+dt_fixed = 1 / 36000                                    #timestep
+substeps = int((1 / 60) // dt_fixed)                    #number of substeps per frame, using 60 fps
+dia = 0.001                                             #grain diameter
+den = 2500.0                                            #grain density
+cellParam = 100                                         #scales the size of the spatial partitioning grid (cells are dia x dia x dia)
+n = 200000                                              #number of grains
+k = 50.0                                                #this simulation uses a spring-dashpot model for normal forces; this is the spring constant
+muK = 0.125                                             #kinetic friction coefficient between grains
+muKSurface = 0.15                                       #kinetic friction coefficient between grains and surfaces
+muSSurface = 0.4                                        #static friction coefficient between grains and surfaces
+elastic = float(False)                                  #0.0 for inelastic collisions, 1.0 for elastic collisions
+grain_mass = (4/3)*pi*(dia/2)**3 * den                  #mass of each grain
+k_surface = k                                           #spring constant for surfaces
+g = 9.81                                                #gravitational acceleration
+cone_angle = 45 * pi / 180                              #pi / 2 - half angle of the cone in radians
+critical_damping = 2 * ti.sqrt(grain_mass * k_surface)  #dashpot damping coefficient for normal forces
+k_t = 0.5 * k                                           #tangential spring constant for friction model
+xi = 0.5                                                #damping ratio for tangential dashpot
+c_t = 2 * xi * ti.sqrt(grain_mass * k_t)                #tangential damping
+aperture_diameter = 8 * dia                             #diameter of the cone's aperture
+time_to_run = 6                                         #Time that each simulation should run before shutting down
 
 #if simulation was run with parameters, override defaults
 if len(sys.argv) > 1:
@@ -624,9 +626,8 @@ while window.running:
             writer.writerow([flow_rates[-1]])
     
 
-    #if the simulation has been going on for at least 0.5s and the flow rate has dropped to zero, 
-    #end the simulation and save the flow rate data in a csv + release the video
-    if (len(flow_rates) >= 15):
+    #if the simulation has run for the desired amount of time, end it.
+    if (len(flow_rates) >= time_to_run // 0.4):
         video.release()
         exit()
     
