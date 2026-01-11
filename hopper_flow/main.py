@@ -615,7 +615,7 @@ while window.running:
         fixed_update()
     current_t += 1/60
 
-    #each 0.1s, calculate and store the flow rate
+    #each 0.4s, calculate and store the flow rate
     if (current_t % 0.3999999999999 < 0.0001):
         count[0] = count[1]
         count[1] = count_flowed_particles()
@@ -651,3 +651,4 @@ while window.running:
     capture_frame()
     canvas.scene(scene)
     window.show()
+
