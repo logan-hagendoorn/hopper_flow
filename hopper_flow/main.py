@@ -627,7 +627,7 @@ while window.running:
     
 
     #if the simulation has run for the desired amount of time, end it.
-    if (len(flow_rates) >= time_to_run // 0.4):
+    if (len(flow_rates) >= (time_to_run+0.000001) // 0.4):
         video.release()
         exit()
     
@@ -651,5 +651,6 @@ while window.running:
     capture_frame()
     canvas.scene(scene)
     window.show()
+
 
 
