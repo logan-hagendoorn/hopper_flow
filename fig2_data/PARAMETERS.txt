@@ -1,6 +1,5 @@
 Most critical parameters:
 Aperture diameters ranged from 7.0 in sim_1 to 8.0 in sim_3 (with a spacing of 0.5).
-
 n = 200000                                              #number of grains
 k = 50.0                                                #this simulation uses a linear spring-dashpot model for normal forces; this is the spring constant
 dia = 0.001                                             #grain diameter
@@ -23,4 +22,5 @@ cone_angle = 45 * pi / 180                              #pi / 2 - half angle of 
 critical_damping = 2 * (grain_mass * k_surface)**0.5    #dashpot damping coefficient for normal forces
 k_t = 0.5 * k                                           #tangential spring constant for friction model
 xi = 0.5                                                #damping ratio for tangential dashpot
+
 c_t = 2 * xi * (grain_mass * k_t)**0.5                  #tangential damping coefficient
