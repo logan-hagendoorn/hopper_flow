@@ -37,7 +37,7 @@ for i in range(1,1 + num_sims):
 
 #Beverloo equation-- use 0.65 * 2500 as density because the Beverloo equation uses bulk density
 def func(D, exp, k, C):
-    return C * 0.65 * 2500 * ((9.81)**0.5) * ((D + k * dia)**exp)
+    return C * 0.65 * 2500 * ((9.81)**0.5) * ((D - k * dia)**exp)
 
 
 avg_flow_rates = np.array(avg_flow_rates)
@@ -54,7 +54,7 @@ xa = np.arange(0,8 * dia,0.05 * dia)
 
 #Plot graph
 plt.plot(diameters * 1000, avg_flow_rates * 1000, 'o')
-plt.plot(xa * 1000, func(xa,*popt) * 1000, '-', label=f"Trendline: {C}ρ√g(D+{k}d)^{exp}")
+plt.plot(xa * 1000, func(xa,*popt) * 1000, '-', label=f"Trendline: ${C}ρg^{{0.5}}(D{'+' if k < 0 else '-'} {abs(k)})^{{{exp}}}$")
 plt.legend()
 plt.xlabel("Aperture diameter (mm)")
 plt.ylabel("Mass flow rate (g/s)")
